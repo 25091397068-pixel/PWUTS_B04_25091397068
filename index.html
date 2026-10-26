@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Menu | KantinKita</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#dashboard" aria-label="KantinKita Admin">
+        <span class="brand-icon">K</span>
+        <span><strong>KantinKita</strong><small>ADMIN PANEL</small></span>
+      </a>
+      <p class="side-label">MENU UTAMA</p>
+      <a class="nav-link active" href="#dashboard"><span>▦</span> Dashboard</a>
+      <a class="nav-link" href="#menu-section"><span>☷</span> Pengelolaan Menu</a>
+      <a class="nav-link" href="#add-section"><span>＋</span> Tambah Menu</a>
+      <div class="sidebar-note">
+        <span class="status-dot"></span>
+        <div><strong>Mode lokal</strong><small>Data tersimpan di browser</small></div>
+      </div>
+      <footer>Website UTS Pemrograman Web<br>Kelompok 4 · KantinKita</footer>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">PENGELOLAAN KANTIN</p>
+          <h1>Dashboard Menu</h1>
+          <p class="subheading">Kelola daftar makanan, harga, dan ketersediaan stok.</p>
+        </div>
+        <div class="admin-chip"><span class="avatar">A</span><span><strong>Abby</strong><small>Administrator</small></span></div>
+      </header>
+
+      <section id="dashboard" class="stats-grid" aria-label="Ringkasan menu">
+        <article class="stat-card"><div class="stat-icon purple">☷</div><div><p>Total menu</p><strong id="total-menu">0</strong><small>Item terdaftar</small></div></article>
+        <article class="stat-card"><div class="stat-icon green">✓</div><div><p>Menu tersedia</p><strong id="available-menu">0</strong><small>Stok lebih dari 0</small></div></article>
+        <article class="stat-card"><div class="stat-icon orange">!</div><div><p>Stok menipis</p><strong id="low-stock">0</strong><small>Stok 1–5 porsi</small></div></article>
+        <article class="stat-card"><div class="stat-icon red">×</div><div><p>Menu habis</p><strong id="out-stock">0</strong><small>Perlu restock</small></div></article>
+      </section>
+
+      <section id="menu-section" class="panel">
+        <div class="panel-heading">
+          <div><h2>Daftar Menu Kantin</h2><p>Gunakan pencarian atau filter untuk menemukan menu.</p></div>
+          <a class="primary-button" href="#add-section">＋ Tambah menu</a>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Cari nama menu..." aria-label="Cari nama menu"></label>
+          <select id="category-filter" aria-label="Filter kategori">
+            <option value="Semua">Semua kategori</option>
+            <option value="Makanan">Makanan</option>
+            <option value="Minuman">Minuman</option>
+            <option value="Camilan">Camilan</option>
+          </select>
+          <select id="stock-filter" aria-label="Filter stok">
+            <option value="Semua">Semua status stok</option>
+            <option value="available">Tersedia</option>
+            <option value="low">Stok menipis</option>
+            <option value="out">Habis</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>MENU</th><th>KATEGORI</th><th>HARGA</th><th>STOK</th><th>STATUS</th><th>AKSI STOK</th></tr></thead>
+            <tbody id="menu-table"></tbody>
+          </table>
+          <div id="empty-state" class="empty-state" hidden>
+            <span>⌕</span><strong>Menu tidak ditemukan</strong><p>Coba kata kunci atau filter lainnya.</p>
+          </div>
+        </div>
+        <div class="table-footer"><span id="result-count">Menampilkan 0 menu</span><span>Stok dapat diperbarui langsung dari tabel.</span></div>
+      </section>
+
+      <section id="add-section" class="panel add-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">FORMULIR ADMIN</p><h2>Tambah Menu Makanan</h2><p>Isi data menu baru dengan benar. Semua kolom wajib diisi.</p></div>
+          <span class="form-mark">＋</span>
+        </div>
+        <form id="menu-form" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="menu-name">Nama menu <span>*</span></label>
+              <input id="menu-name" name="nama" type="text" maxlength="70" placeholder="Contoh: Nasi Goreng Kampus" required>
+              <small class="error" id="name-error"></small>
+            </div>
+            <div class="form-field">
+              <label for="menu-category">Kategori <span>*</span></label>
+              <select id="menu-category" name="kategori" required>
+                <option value="">Pilih kategori</option><option>Makanan</option><option>Minuman</option><option>Camilan</option>
+              </select>
+              <small class="error" id="category-error"></small>
+            </div>
+            <div class="form-field">
+              <label for="menu-price">Harga (Rp) <span>*</span></label>
+              <input id="menu-price" name="harga" type="number" min="500" max="1000000" step="500" placeholder="12000" required>
+              <small class="hint">Masukkan angka tanpa titik, misalnya 12000.</small>
+              <small class="error" id="price-error"></small>
+            </div>
+            <div class="form-field">
+              <label for="menu-stock">Stok awal <span>*</span></label>
+              <input id="menu-stock" name="stok" type="number" min="0" max="999" step="1" placeholder="20" required>
+              <small class="error" id="stock-error"></small>
+            </div>
+            <div class="form-field full-width">
+              <label for="menu-description">Deskripsi menu <span>*</span></label>
+              <textarea id="menu-description" name="deskripsi" maxlength="180" rows="3" placeholder="Jelaskan menu secara singkat..." required></textarea>
+              <small class="hint">Maksimal 180 karakter.</small>
+              <small class="error" id="description-error"></small>
+            </div>
+          </div>
+          <div id="form-message" class="form-message" role="status" aria-live="polite"></div>
+          <div class="form-actions"><button type="reset" class="secondary-button">Reset</button><button type="submit" class="primary-button">Simpan menu <span>→</span></button></div>
+        </form>
+      </section>
+      <footer class="mobile-footer">KantinKita · Dashboard Pengelolaan Menu · Abby</footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
